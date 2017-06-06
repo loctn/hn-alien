@@ -2,11 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 
-import styles from './index.css';
+import HnListItem from './HnListItem';
+
+import styles from './HnAlien.css';
 
 const HnAlien = ({ styles }) => (
   <div styleName="component">
-    Test component
+    <div styleName="header">Hacker News</div>
+    <div>
+      <HnListItem />
+      <HnListItem />
+      <HnListItem />
+      <HnListItem />
+      <HnListItem />
+      <HnListItem />
+      <HnListItem />
+    </div>
   </div>
 );
 

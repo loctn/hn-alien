@@ -2,7 +2,7 @@
   "name": "hn-alien",
   "version": "0.0.0",
   "description": "A Hacker News reader in the style of the Reddit mobile app",
-  "main": "index.js",
+  "main": "src/index.jsx",
   "scripts": {
     "build": "node_modules/.bin/webpack",
     "build:watch": "npm run build -- -w",
@@ -11,6 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Loc Nguyen <loc2000@gmail.com> (http://locwin.com/)",
+  "repository": "loctn/hn-alien",
   "license": "MIT",
   "devDependencies": {
     "babel-core": "6.24.1",
