@@ -28,7 +28,7 @@ const config = module.exports = {
       }
     }),
     new HtmlWebpackPlugin({
-      title: 'This is a test title',
+      title: 'HN Alien',
       template: './src/index.ejs'
     }),
     new ExtractTextPlugin({

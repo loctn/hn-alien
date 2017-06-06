@@ -1,3 +1,13 @@
+@import 'theme/layout.css';
+@import 'theme/colors.css';
+
+html {
+  background-color: var(--color-bg-light);
+  color: var(--color-text-dark);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-normal);
+}
+
 .component {
-  background-color: #eee;
+  
 }
