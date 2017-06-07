@@ -5,6 +5,12 @@
   height: 16px;
   margin-top: 12px;
 }
+@media (min-width: 700px) {
+  .component {
+    margin-top: 8px;
+    width: 360px;
+  }
+}
 .button {
   background-repeat: no-repeat;
   border-right: 1px solid rgba(0, 0, 0, 0.04183);

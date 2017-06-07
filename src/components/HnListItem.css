@@ -16,6 +16,11 @@
   display: table;
   clear: both;
 }
+@media (min-width: 700px) {
+  .details:after {
+    clear: none;
+  }
+}
 .source {
   color: var(--color-text-light);
   font-size: 12px;
@@ -33,4 +38,10 @@
   height: 62px;
   margin-left: 13px;
   width: 62px;
+}
+@media (min-width: 700px) {
+  .thumbnail {
+    float: left;
+    margin: 0 13px 0 0;
+  }
 }
