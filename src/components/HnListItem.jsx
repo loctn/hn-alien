@@ -1,26 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import P from 'prop-types';
 import CSSModules from 'react-css-modules';
 
 import HnListItemButtons from './HnListItemButtons';
 
 import styles from './HnListItem.css';
 
-const HnListItem = ({ styles }) => (
+const HnListItem = ({ styles, time, url, points, comments, children }) => (
   <div styleName="component">
     <div styleName="details">
-      <div styleName="heading">
-        <div styleName="source">10h • huffingtonpost</div>
-        <div styleName="title">'Wonder Woman' Shatters Box Office With Biggest Female Director Opening. Ever.</div>
-      </div>
       <div styleName="thumbnail"></div>
+      <div styleName="source">{time} • {new URL(url).hostname.replace(/^www\./i, '')}</div>
+      <div styleName="title">{children}</div>
     </div>
-    <HnListItemButtons />
+    <HnListItemButtons points={points} comments={comments} url={url} />
   </div>
 );
 
 HnListItem.propTypes = {
-  styles: PropTypes.object
+  styles: P.object,
+  time: P.string.isRequired,
+  url: P.string.isRequired,
+  points: P.number.isRequired,
+  comments: P.number.isRequired,
+  children: P.string.isRequired
 };
 
 export default CSSModules(HnListItem, styles);

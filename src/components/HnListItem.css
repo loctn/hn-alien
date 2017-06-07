@@ -9,12 +9,12 @@
   border-bottom: none;
 }
 .details {
-  align-items: flex-start;
-  display: flex;
   margin: 0 16px;
 }
-.heading {
-  flex: 1;
+.details:after {
+  content: '';
+  display: table;
+  clear: both;
 }
 .source {
   color: var(--color-text-light);
@@ -29,7 +29,8 @@
 .thumbnail {
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 4px;
-  flex-basis: 62px;
+  float: right;
   height: 62px;
   margin-left: 13px;
+  width: 62px;
 }

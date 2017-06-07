@@ -14,7 +14,6 @@
   font-size: 11px;
   justify-content: center;
   line-height: 16px;
-  text-align: center;
 }
 .button:last-child {
   border-right: none;
@@ -27,19 +26,9 @@
   background-position: top center;
   background-repeat: no-repeat;
 }
-.vote-count {
-  flex-basis: 57px;
-}
-.vote-up, .vote-down {
-  composes: icon;
-  background-size: 12px 16px;
-  flex-basis: 11px;
-}
-.vote-up {
-  background-image: url('./vote-up.png');
-}
-.vote-down {
-  background-image: url('./vote-down.png');
+.points {
+  flex: 1;
+  text-align: center;
 }
 .comment {
   composes: icon;
@@ -48,7 +37,8 @@
   flex-basis: 16px;
 }
 .comment-count {
-  flex-basis: 37px;
+  flex-basis: 27px;
+  margin-left: 10px;
 }
 .share {
   composes: icon;
@@ -57,5 +47,6 @@
   flex-basis: 12px;
 }
 .share-label {
-  flex-basis: 47px;
+  flex-basis: 36px;
+  margin-left: 11px;
 }

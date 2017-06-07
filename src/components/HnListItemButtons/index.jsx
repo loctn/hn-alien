@@ -1,19 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import P from 'prop-types';
 import CSSModules from 'react-css-modules';
 
 import styles from './HnListItemButtons.css';
 
-const HnListItemButtons = ({ styles }) => (
+const HnListItemButtons = ({ styles, points, comments }) => (
   <div styleName="component">
     <div styleName="button">
-      <div styleName="vote-up"></div>
-      <div styleName="vote-count"><span>30.9k</span></div>
-      <div styleName="vote-down"></div>
+      <div styleName="points"><span>{points} points</span></div>
     </div>
     <div styleName="button">
       <div styleName="comment"></div>
-      <div styleName="comment-count"><span>2.0k</span></div>
+      <div styleName="comment-count"><span>{comments}</span></div>
     </div>
     <div styleName="button">
       <div styleName="share"></div>
@@ -23,7 +21,9 @@ const HnListItemButtons = ({ styles }) => (
 );
 
 HnListItemButtons.propTypes = {
-  styles: PropTypes.object
+  styles: P.object,
+  points: P.number.isRequired,
+  comments: P.number.isRequired
 };
 
 export default CSSModules(HnListItemButtons, styles);
