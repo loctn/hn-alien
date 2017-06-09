@@ -16,10 +16,10 @@ const HnListItem = ({ styles, time, url, points, comments, children }) => {
         <div styleName="source">
           {formatDuration(time)}
           {source &&
-            <span>{' • '}<a href={formatSourceHref(url)}>{source}</a></span>
+            <span>{' • '}<a href={formatSourceHref(url)} target="_blank" rel="noopener">{source}</a></span>
           }
         </div>
-        <div styleName="title"><a href={url}>{children}</a></div>
+        <div styleName="title"><a href={url} target="_blank" rel="noopener">{children}</a></div>
       </div>
       <HnListItemButtons points={points} comments={comments} url={url} />
     </div>
