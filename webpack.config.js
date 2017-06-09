@@ -29,7 +29,7 @@ const config = module.exports = {
     }),
     new HtmlWebpackPlugin({
       title: 'HN Alien',
-      template: './src/index.ejs'
+      template: './src/theme/index.ejs'
     }),
     new ExtractTextPlugin({
       filename: '[name].[hash:8].css',
@@ -62,7 +62,7 @@ const config = module.exports = {
   },
   resolve: {
     alias: {
-      '~': path.resolve(__dirname, './src/components')
+      '~': path.resolve(__dirname, './src')
     },
     extensions: ['.js', '.jsx']
   }

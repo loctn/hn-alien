@@ -4,6 +4,7 @@ import CSSModules from 'react-css-modules';
 
 import styles from './HnListItemButtons.css';
 
+
 const HnListItemButtons = ({ styles, points, comments }) => (
   <div styleName="component">
     <div styleName="button">
@@ -23,7 +24,8 @@ const HnListItemButtons = ({ styles, points, comments }) => (
 HnListItemButtons.propTypes = {
   styles: P.object,
   points: P.number.isRequired,
-  comments: P.number.isRequired
+  comments: P.number
 };
+
 
 export default CSSModules(HnListItemButtons, styles);
