@@ -3,7 +3,7 @@ import P from 'prop-types';
 import CSSModules from 'react-css-modules';
 
 import HnListItemButtons from './HnListItemButtons';
-import { formatDuration, formatSource } from '~/lib/utils';
+import { formatDuration, formatSource, formatSourceHref } from '~/lib/utils';
 import styles from './HnListItem.css';
 
 
@@ -13,8 +13,13 @@ const HnListItem = ({ styles, time, url, points, comments, children }) => {
     <div styleName="component">
       <div styleName="details">
         <div styleName="thumbnail"></div>
-        <div styleName="source">{formatDuration(time)}{source && ' • ' + source}</div>
-        <div styleName="title">{children}</div>
+        <div styleName="source">
+          {formatDuration(time)}
+          {source &&
+            <span>{' • '}<a href={formatSourceHref(url)}>{source}</a></span>
+          }
+        </div>
+        <div styleName="title"><a href={url}>{children}</a></div>
       </div>
       <HnListItemButtons points={points} comments={comments} url={url} />
     </div>

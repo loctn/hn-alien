@@ -6,3 +6,8 @@ export const formatDuration = time => {
 };
 
 export const formatSource = url => new URL(url || 'about:blank').hostname.replace(/^www\./i, '');
+
+export const formatSourceHref = url => {
+  const obj = new URL(url || 'about:blank');
+  return obj.protocol + '//' + obj.hostname;
+};

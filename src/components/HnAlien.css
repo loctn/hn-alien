@@ -1,12 +1,5 @@
-@import 'theme/layout.css';
+@import 'theme/global.css';
 @import 'theme/colors.css';
-
-html, body {
-  background-color: var(--color-bg-light);
-  color: var(--color-text-dark);
-  font-family: var(--font-family);
-  font-weight: var(--font-weight-normal);
-}
 
 .component {
   
