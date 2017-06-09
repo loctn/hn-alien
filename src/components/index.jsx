@@ -56,6 +56,17 @@ class HnAlien extends Component {
     return (
       <div styleName="component">
         <div styleName="header">Hacker News</div>
+        <div styleName="nav-container">
+          <div styleName="floating-nav">
+            <div styleName="nav">
+              <div styleName="nav-tab" className={this.props.styles['nav-tab-active']}><span>Home</span></div>
+              <div styleName="nav-tab"><span>Listings</span></div>
+            </div>
+            <div styleName="subnav">
+              <span>Top</span>
+            </div>
+          </div>
+        </div>
         <div>
           {this.state[this.state.storyType].map(item =>
             <HnListItem key={item.id} time={item.time} url={item.url} points={item.score} comments={item.descendants}>

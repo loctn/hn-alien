@@ -12,3 +12,49 @@
   line-height: 56px;
   padding: 0 16px;
 }
+.nav-container {
+  height: 78px;
+  position: relative;
+  
+}
+.floating-nav {
+  box-shadow: 0 0 5px #777;
+  color: var(--color-text-light);
+  font-weight: var(--font-weight-bold);
+  left: 0;
+  position: absolute;
+  text-transform: uppercase;
+  top: 0;
+  width: 100%;
+}
+.nav {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.13333);
+  display: flex;
+  font-size: 14px;
+  height: 42px;
+  justify-content: center;
+}
+.nav span {
+  position: relative;
+  top: 2px;
+}
+.nav-tab {
+  border-bottom: 2px solid transparent;
+  flex-basis: 156px;
+  line-height: 40px;
+  text-align: center;
+}
+.nav-tab-active {
+  border-bottom: 2px solid var(--color-bg-dark);
+  color: var(--color-bg-dark);
+}
+.subnav {
+  font-size: 12px;
+  height: 35px;
+  line-height: 35px;
+  padding: 0 13px;
+}
+.subnav span {
+  position: relative;
+  top: 1px;
+}
