@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import P from 'prop-types';
 import CSSModules from 'react-css-modules';
+import classNames from 'classnames';
 
 import HnListItem from './HnListItem';
 import { getHnStoryIds, getHnItem } from '~/apiClient';
@@ -26,19 +27,22 @@ class HnAlien extends Component {
     askstories: [],
     showstories: [],
     jobstories: [],
-    storyType: 'topstories'
+    storyType: 'topstories',
+    isNavDocked: false
   }
 
   componentDidMount = () => {
     getHnStoryIds(this.state.storyType)
       .then(data => {
         if (data) {
-          this.setState({ [this.state.storyType + 'Queue']: data.reverse() }, this.fetchStories.bind(this, 30));
+          this.setState({ [this.state.storyType + 'Queue']: data.reverse() }, this.fetchStories.bind(this, 6, true));
         }
       });
+
+    window.addEventListener('scroll', this.handleScroll);
   }
 
-  fetchStories = count => {
+  fetchStories = (count, isInitial) => {
     const queue = this.state[this.state.storyType + 'Queue'];
     const promises = [];
     for (let i = 0; i < count && queue.length; i++) {
@@ -48,18 +52,31 @@ class HnAlien extends Component {
       .then(data => {
         if (data) {
           this.setState({ [this.state.storyType]: [...this.state[this.state.storyType], ...data] });
+          if (isInitial) this.fetchStories(24);
         }
       });
   }
 
+  handleScroll = () => {
+    this.scrollY = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    if (!this.isTicking) {
+      window.requestAnimationFrame(() => {
+        this.setState({ isNavDocked: this.scrollY >= 62 });
+        this.isTicking = false;
+      });
+    }
+    this.isTicking = true;
+  }
+
   render() {
+    const styles = this.props.styles;
     return (
       <div styleName="component">
         <div styleName="header">Hacker News</div>
         <div styleName="nav-container">
-          <div styleName="floating-nav">
+          <div styleName="floating-nav" className={classNames({ [styles['floating-nav-docked']]: this.state.isNavDocked })}>
             <div styleName="nav">
-              <div styleName="nav-tab" className={this.props.styles['nav-tab-active']}><span>Home</span></div>
+              <div styleName="nav-tab" className={styles['nav-tab-active']}><span>Home</span></div>
               <div styleName="nav-tab"><span>Listings</span></div>
             </div>
             <div styleName="subnav">

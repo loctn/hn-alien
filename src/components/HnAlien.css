@@ -14,11 +14,9 @@
 }
 .nav-container {
   height: 78px;
-  position: relative;
-  
+  position: relative; 
 }
 .floating-nav {
-  box-shadow: 0 0 5px #777;
   color: var(--color-text-light);
   font-weight: var(--font-weight-bold);
   left: 0;
@@ -26,13 +24,23 @@
   text-transform: uppercase;
   top: 0;
   width: 100%;
+  z-index: 100;
+}
+.floating-nav-docked {
+  position: fixed;
 }
 .nav {
+  background-color: var(--color-bg-light);
   border-bottom: 1px solid rgba(0, 0, 0, 0.13333);
   display: flex;
   font-size: 14px;
   height: 42px;
   justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 300;
 }
 .nav span {
   position: relative;
@@ -49,10 +57,18 @@
   color: var(--color-bg-dark);
 }
 .subnav {
+  background-color: var(--color-bg-light);
+  box-sizing: border-box;
+  box-shadow: 0 0 5px #777;
   font-size: 12px;
   height: 35px;
+  left: 0;
   line-height: 35px;
   padding: 0 13px;
+  position: absolute;
+  top: 43px;
+  width: 100%;
+  z-index: 200;
 }
 .subnav span {
   position: relative;
