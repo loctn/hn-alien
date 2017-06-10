@@ -74,14 +74,14 @@ class HnAlien extends Component {
       <div styleName="component">
         <div styleName="header">Hacker News</div>
         <div styleName="nav-container">
-          <div styleName="floating-nav" className={classNames({ [styles['floating-nav-docked']]: this.state.isNavDocked })}>
-            <div styleName="nav">
-              <div styleName="nav-tab" className={styles['nav-tab-active']}><span>Home</span></div>
-              <div styleName="nav-tab"><span>Listings</span></div>
-            </div>
-            <div styleName="subnav">
-              <span>Top</span>
-            </div>
+          <div styleName="nav-floating" className={classNames({ [styles['nav-floating-docked']]: this.state.isNavDocked })}>
+            <div styleName="nav-tab" className={styles['nav-tab-active']}><span>Home</span></div>
+            <div styleName="nav-tab"><span>Show</span></div>
+            <div styleName="nav-tab"><span>Ask</span></div>
+            <div styleName="nav-tab"><span>Jobs</span></div>
+          </div>
+          <div styleName="nav-sort">
+            <span>Top</span>
           </div>
         </div>
         <div>
