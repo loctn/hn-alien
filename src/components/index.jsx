@@ -65,8 +65,9 @@ class HnAlien extends Component {
     this.scrollY = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
     if (!this.isTicking) {
       window.requestAnimationFrame(() => {
-        this.setState({ isNavDocked: this.scrollY >= 62 });
-        this.isTicking = false;
+        this.setState({ isNavDocked: this.scrollY >= 62 }, () => {
+          this.isTicking = false;
+        });
       });
     }
     this.isTicking = true;
@@ -76,7 +77,7 @@ class HnAlien extends Component {
     e.preventDefault();
     if (this.disableNav) return;
     this.setState({ storyType }, () => {
-      if (!this.state[storyType + 'Queue'].length) {
+      if (!this.state[storyType + 'Queue'].length) {  // TODO: should only happen once
         this.disableNav = true;
         this.fetchInitialStories();
       }
