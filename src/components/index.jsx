@@ -1,48 +1,48 @@
 import React, { Component } from 'react';
 import P from 'prop-types';
 import CSSModules from 'react-css-modules';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 import HnListItem from './HnListItem';
 import { getHnStoryIds, getHnItem } from '~/apiClient';
+import { addStories } from '~/actions/stories';
 import styles from './HnAlien.css';
 
 
 class HnAlien extends Component {
   static propTypes = {
-    styles: P.object
+    styles: P.object,
+    stories: P.object.isRequired,
+    onAddStories: P.func.isRequired
   }
 
-  // TODO: put this in Redux since children data are returned by API
   state = {
-    newstoriesQueue: [],
-    topstoriesQueue: [],
-    beststoriesQueue: [],
-    askstoriesQueue: [],
-    showstoriesQueue: [],
-    jobstoriesQueue: [],
-    newstories: [],
-    topstories: [],
-    beststories: [],
-    askstories: [],
-    showstories: [],
-    jobstories: [],
-    storyType: 'topstories',
+    newQueue: [],
+    topQueue: [],
+    bestQueue: [],
+    askQueue: [],
+    showQueue: [],
+    jobQueue: [],
+    storyType: 'top',
     isNavDocked: false
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+    this.fetchInitialStories();
+  }
+
+  fetchInitialStories() {
     getHnStoryIds(this.state.storyType)
       .then(data => {
         if (data) {
           this.setState({ [this.state.storyType + 'Queue']: data.reverse() }, this.fetchStories.bind(this, 6, true));
         }
       });
-
-    window.addEventListener('scroll', this.handleScroll);
   }
 
-  fetchStories = (count, isInitial) => {
+  fetchStories(count, isShortFetch) {
     const queue = this.state[this.state.storyType + 'Queue'];
     const promises = [];
     for (let i = 0; i < count && queue.length; i++) {
@@ -51,8 +51,12 @@ class HnAlien extends Component {
     Promise.all(promises)
       .then(data => {
         if (data) {
-          this.setState({ [this.state.storyType]: [...this.state[this.state.storyType], ...data] });
-          if (isInitial) this.fetchStories(24);
+          this.props.onAddStories(this.state.storyType, data);
+          if (isShortFetch) {
+            this.fetchStories(24);
+          } else {
+            this.disableNav = false;
+          }
         }
       });
   }
@@ -68,6 +72,17 @@ class HnAlien extends Component {
     this.isTicking = true;
   }
 
+  handleChangeStoryType = (e, storyType) => {
+    e.preventDefault();
+    if (this.disableNav) return;
+    this.setState({ storyType }, () => {
+      if (!this.state[storyType + 'Queue'].length) {
+        this.disableNav = true;
+        this.fetchInitialStories();
+      }
+    });
+  }
+
   render() {
     const styles = this.props.styles;
     return (
@@ -75,19 +90,27 @@ class HnAlien extends Component {
         <div styleName="header">Hacker News</div>
         <div styleName="nav-container">
           <div styleName="nav-floating" className={classNames({ [styles['nav-floating-docked']]: this.state.isNavDocked })}>
-            <div styleName="nav-tab" className={styles['nav-tab-active']}><span>Home</span></div>
-            <div styleName="nav-tab"><span>Show</span></div>
-            <div styleName="nav-tab"><span>Ask</span></div>
-            <div styleName="nav-tab"><span>Jobs</span></div>
+            <a href="#" className={classNames({
+              [styles['nav-tab-active']]: ~['top', 'new', 'best'].indexOf(this.state.storyType)
+            })} onClick={e => this.handleChangeStoryType(e, 'top')}><span>Home</span></a>
+            <a href="#" className={classNames({
+              [styles['nav-tab-active']]: this.state.storyType === 'show'
+            })} onClick={e => this.handleChangeStoryType(e, 'show')}><span>Show</span></a>
+            <a href="#" className={classNames({
+              [styles['nav-tab-active']]: this.state.storyType === 'ask'
+            })} onClick={e => this.handleChangeStoryType(e, 'ask')}><span>Ask</span></a>
+            <a href="#" className={classNames({
+              [styles['nav-tab-active']]: this.state.storyType === 'job'
+            })} onClick={e => this.handleChangeStoryType(e, 'job')}><span>Jobs</span></a>
           </div>
-          <div styleName="nav-sort">
+          <div styleName="nav-filter">
             <span>Top</span>
           </div>
         </div>
         <div>
-          {this.state[this.state.storyType].map(item =>
-            <HnListItem key={item.id} time={item.time} url={item.url} points={item.score} comments={item.descendants}>
-              {item.title}
+          {this.props.stories[this.state.storyType].map(story =>
+            <HnListItem key={story.id} time={story.time} url={story.url} points={story.score} comments={story.descendants}>
+              {story.title}
             </HnListItem>
           )}
         </div>
@@ -96,5 +119,15 @@ class HnAlien extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  stories: state.stories
+});
 
-export default CSSModules(HnAlien, styles);
+const mapDispatchToProps = dispatch => ({
+  onAddStories: (storyType, stories) => {
+    dispatch(addStories(storyType, stories));
+  }
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(HnAlien, styles));

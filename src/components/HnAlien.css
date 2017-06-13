@@ -41,17 +41,20 @@
 .nav-floating-docked {
   position: fixed;
 }
-.nav-tab {
+.nav-floating > a {
   border-bottom: 2px solid transparent;
+  color: inherit;
+  display: block;
   flex-basis: 80px;
   line-height: 40px;
   text-align: center;
+  text-decoration: none;
 }
 .nav-tab-active {
-  border-bottom: 2px solid var(--color-bg-dark);
-  color: var(--color-bg-dark);
+  border-bottom: 2px solid var(--color-bg-dark) !important;
+  color: var(--color-bg-dark) !important;
 }
-.nav-sort {
+.nav-filter {
   background-color: rgba(0, 0, 0, 0.06275);
   border-bottom: 1px solid rgba(0, 0, 0, 0.13333);
   font-size: 12px;
@@ -59,7 +62,7 @@
   line-height: 35px;
   padding: 42px 13px 0 13px;
 }
-.nav-sort span {
+.nav-filter span {
   position: relative;
   top: 1px;
 }
