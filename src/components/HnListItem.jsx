@@ -7,7 +7,7 @@ import { formatDuration, formatSource, formatSourceHref } from '~/lib/utils';
 import styles from './HnListItem.css';
 
 
-const HnListItem = ({ styles, time, url, points, comments, children }) => {
+const HnListItem = ({ styles, id, time, user, url, points, comments, children }) => {
   const source = formatSource(url);
   return (
     <div styleName="component">
@@ -15,11 +15,15 @@ const HnListItem = ({ styles, time, url, points, comments, children }) => {
         <div styleName="thumbnail"></div>
         <div styleName="source">
           {formatDuration(time)}
+          {' • '}
           {source &&
-            <span>{' • '}<a href={formatSourceHref(url)} target="_blank" rel="noopener">{source}</a></span>
+            <a href={formatSourceHref(url)} target="_blank" rel="noopener">{source}</a>
           }
+          {!source && user}
         </div>
-        <div styleName="title"><a href={url} target="_blank" rel="noopener">{children}</a></div>
+        <div styleName="title">
+          <a href={url || 'https://news.ycombinator.com/item?id=' + id} target="_blank" rel="noopener">{children}</a>
+        </div>
       </div>
       <HnListItemButtons points={points} comments={comments} url={url} />
     </div>
@@ -28,7 +32,9 @@ const HnListItem = ({ styles, time, url, points, comments, children }) => {
 
 HnListItem.propTypes = {
   styles: P.object,
+  id: P.number.isRequired,
   time: P.number.isRequired,
+  user: P.string.isRequired,
   url: P.string,
   points: P.number.isRequired,
   comments: P.number,

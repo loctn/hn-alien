@@ -65,7 +65,7 @@ class HnAlien extends Component {
     this.scrollY = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
     if (!this.isTicking) {
       window.requestAnimationFrame(() => {
-        this.setState({ isNavDocked: this.scrollY >= 62 }, () => {
+        this.setState({ isNavDocked: this.scrollY >= 56 }, () => {
           this.isTicking = false;
         });
       });
@@ -110,7 +110,7 @@ class HnAlien extends Component {
         </div>
         <div>
           {this.props.stories[this.state.storyType].map(story =>
-            <HnListItem key={story.id} time={story.time} url={story.url} points={story.score} comments={story.descendants}>
+            <HnListItem key={story.id} id={story.id} time={story.time} user={story.by} url={story.url} points={story.score} comments={story.descendants}>
               {story.title}
             </HnListItem>
           )}

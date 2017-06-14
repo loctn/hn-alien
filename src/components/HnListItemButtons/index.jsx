@@ -10,10 +10,12 @@ const HnListItemButtons = ({ styles, points, comments }) => (
     <div styleName="button">
       <div styleName="points"><span>{points} points</span></div>
     </div>
-    <div styleName="button">
-      <div styleName="comment"></div>
-      <div styleName="comment-count"><span>{comments}</span></div>
-    </div>
+    {(comments || comments === 0) &&
+      <div styleName="button">
+        <div styleName="comment"></div>
+        <div styleName="comment-count"><span>{comments}</span></div>
+      </div>
+    }
     <div styleName="button">
       <div styleName="share"></div>
       <div styleName="share-label"><span>Share</span></div>
