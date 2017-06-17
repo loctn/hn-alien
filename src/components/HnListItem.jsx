@@ -25,7 +25,7 @@ const HnListItem = ({ styles, id, time, user, url, points, comments, children })
           <a href={url || 'https://news.ycombinator.com/item?id=' + id} target="_blank" rel="noopener">{children}</a>
         </div>
       </div>
-      <HnListItemButtons points={points} comments={comments} url={url} />
+      <HnListItemButtons id={id} points={points} comments={comments} url={url} />
     </div>
   );
 };

@@ -36,11 +36,22 @@
   flex: 1;
   text-align: center;
 }
+a.comment, a.comment-count {
+  color: inherit;
+  display: block;
+  text-decoration: none;
+}
+a.comment-count:hover {
+  text-decoration: underline;
+}
 .comment {
   composes: icon;
   background-image: url('./comment.png');
   background-size: 16px 16px;
   flex-basis: 16px;
+}
+.comment-no-thread {
+  visibility: hidden;
 }
 .comment-count {
   flex-basis: 27px;
