@@ -37,7 +37,10 @@ class HnAlien extends Component {
     getHnStoryIds(this.state.storyType)
       .then(data => {
         if (data) {
-          this.setState({ [this.state.storyType + 'Queue']: data.reverse() }, this.fetchStories.bind(this, 6, true));
+          this.setState({
+            // Place 0 at the end of the queue to indicate we've fired fetchInitialStories for that storyType
+            [this.state.storyType + 'Queue']: data.concat([0]).reverse()
+          }, this.fetchStories.bind(this, 6, true));
         }
       });
   }
@@ -45,7 +48,7 @@ class HnAlien extends Component {
   fetchStories(count, isShortFetch) {
     const queue = this.state[this.state.storyType + 'Queue'];
     const promises = [];
-    for (let i = 0; i < count && queue.length; i++) {
+    for (let i = 0; i < count && queue[queue.length - 1]; i++) {
       promises.push(getHnItem(queue.pop()));
     }
     Promise.all(promises)
@@ -77,7 +80,7 @@ class HnAlien extends Component {
     e.preventDefault();
     if (this.disableNav) return;
     this.setState({ storyType }, () => {
-      if (!this.state[storyType + 'Queue'].length) {  // TODO: should only happen once
+      if (!this.state[storyType + 'Queue'].length) {
         this.disableNav = true;
         this.fetchInitialStories();
       }
