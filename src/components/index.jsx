@@ -29,8 +29,30 @@ class HnAlien extends Component {
   }
 
   componentDidMount() {
+    window.addEventListener('popstate', this.changeRoute);
     window.addEventListener('scroll', this.handleScroll);
-    this.fetchInitialStories();
+
+    if (window.location.search) {
+      this.changeRoute();
+    } else {
+      this.fetchInitialStories();
+    }
+  }
+
+  changeRoute = () => {
+    switch (window.location.search) {
+    case '':
+      this.handleClickNavTab(null, 'top');
+      break;
+    case '?show':
+      this.handleClickNavTab(null, 'show');
+      break;
+    case '?ask':
+      this.handleClickNavTab(null, 'ask');
+      break;
+    case '?jobs':
+      this.handleClickNavTab(null, 'job');
+    }
   }
 
   fetchInitialStories() {
@@ -48,9 +70,11 @@ class HnAlien extends Component {
   fetchStories(count, isShortFetch) {
     const queue = this.state[this.state.storyType + 'Queue'];
     const promises = [];
+
     for (let i = 0; i < count && queue[queue.length - 1]; i++) {
       promises.push(getHnItem(queue.pop()));
     }
+
     Promise.all(promises)
       .then(data => {
         if (data) {
@@ -66,6 +90,7 @@ class HnAlien extends Component {
 
   handleScroll = () => {
     this.scrollY = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+
     if (!this.isTicking) {
       window.requestAnimationFrame(() => {
         this.setState({ isNavDocked: this.scrollY >= 56 }, () => {
@@ -73,12 +98,18 @@ class HnAlien extends Component {
         });
       });
     }
+
     this.isTicking = true;
   }
 
-  handleChangeStoryType = (e, storyType) => {
-    e.preventDefault();
+  handleClickNavTab = (event, storyType, route) => {
+    if (event) event.preventDefault();
     if (this.disableNav) return;
+    
+    if (route !== undefined) {
+      history.pushState(null, '', route);
+    }
+
     this.setState({ storyType }, () => {
       if (!this.state[storyType + 'Queue'].length) {
         this.disableNav = true;
@@ -94,18 +125,26 @@ class HnAlien extends Component {
         <div styleName="header">Hacker News</div>
         <div styleName="nav-container">
           <div styleName="nav-floating" className={classNames({ [styles['nav-floating-docked']]: this.state.isNavDocked })}>
-            <a href="#" className={classNames({
+            <a href="#" styleName="nav-tab" className={classNames({
               [styles['nav-tab-active']]: ~['top', 'new', 'best'].indexOf(this.state.storyType)
-            })} onClick={e => this.handleChangeStoryType(e, 'top')}><span>Home</span></a>
-            <a href="#" className={classNames({
+            })} onClick={event => {
+              this.handleClickNavTab(event, 'top', '');
+            }}><span>Home</span></a>
+            <a href="#" styleName="nav-tab" className={classNames({
               [styles['nav-tab-active']]: this.state.storyType === 'show'
-            })} onClick={e => this.handleChangeStoryType(e, 'show')}><span>Show</span></a>
-            <a href="#" className={classNames({
+            })} onClick={event => {
+              this.handleClickNavTab(event, 'show', '?show');
+            }}><span>Show</span></a>
+            <a href="#" styleName="nav-tab" className={classNames({
               [styles['nav-tab-active']]: this.state.storyType === 'ask'
-            })} onClick={e => this.handleChangeStoryType(e, 'ask')}><span>Ask</span></a>
-            <a href="#" className={classNames({
+            })} onClick={event => {
+              this.handleClickNavTab(event, 'ask', '?ask');
+            }}><span>Ask</span></a>
+            <a href="#" styleName="nav-tab" className={classNames({
               [styles['nav-tab-active']]: this.state.storyType === 'job'
-            })} onClick={e => this.handleChangeStoryType(e, 'job')}><span>Jobs</span></a>
+            })} onClick={event => {
+              this.handleClickNavTab(event, 'job', '?jobs');
+            }}><span>Jobs</span></a>
           </div>
           <div styleName="nav-filter">
             <span>Top</span>

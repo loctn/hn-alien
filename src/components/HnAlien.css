@@ -41,7 +41,7 @@
 .nav-floating-docked {
   position: fixed;
 }
-.nav-floating > a {
+.nav-tab {
   border-bottom: 2px solid transparent;
   color: inherit;
   display: block;
@@ -51,8 +51,8 @@
   text-decoration: none;
 }
 .nav-tab-active {
-  border-bottom: 2px solid var(--color-bg-dark) !important;
-  color: var(--color-bg-dark) !important;
+  border-bottom: 2px solid var(--color-bg-dark);
+  color: var(--color-bg-dark);
 }
 .nav-filter {
   background-color: rgba(0, 0, 0, 0.06275);
